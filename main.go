@@ -15,9 +15,9 @@ type PlaylistItem struct {
 }
 
 type Input struct {
-	URL     string `json:"url"`
-	Referer string `json:"referer,omitempty"`
-	Options struct {
+	URL      string `json:"url"`
+	Referrer string `json:"referrer,omitempty"`
+	Options  struct {
 		Playlist []PlaylistItem `json:"playlist"`
 	} `json:"options"`
 }
@@ -25,6 +25,7 @@ type Input struct {
 func main() {
 	http.HandleFunc("/", formHandler)
 	http.HandleFunc("/upload", uploadHandler)
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	fmt.Println("Server running at http://localhost:8080/")
 	log.Fatal(http.ListenAndServe(":8080", nil))
@@ -37,6 +38,7 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 		<head>
 			<meta charset="UTF-8">
 			<title>JSON Multi-Upload</title>
+			<link rel="icon" type="image/png" href="/favicon.png">
 		</head>
 		<body>
 			<h1>Upload multiple JSON files</h1>
@@ -108,8 +110,8 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		line := "kinescope-dl.exe"
-		if strings.TrimSpace(input.Referer) != "" {
-			line += " -r " + escapeArg(input.Referer)
+		if strings.TrimSpace(input.Referrer) != "" {
+			line += " -r " + escapeArg(input.Referrer)
 		}
 		line += " " + escapeArg(cleanURL)
 		line += " " + escapeArg(finalTitle)
