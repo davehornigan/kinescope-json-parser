@@ -1,5 +1,5 @@
 ARG GOLANG_VERSION=1.24
-FROM golang:${GOLANG_VERSION}-alpine AS build
+FROM golang:${GOLANG_VERSION}-alpine AS builder
 
 WORKDIR /app
 
