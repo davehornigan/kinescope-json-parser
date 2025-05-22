@@ -7,8 +7,7 @@ WORKDIR /app
 COPY . .
 
 # Собираем статический бинарник
-RUN go mod tidy && \
-    CGO_ENABLED=0 GOOS=linux go build -o /kinescope-json-parser
+RUN go mod tidy && CGO_ENABLED=0 GOOS=linux go build -o /kinescope-json-parser
 
 # Stage 2: Minimal runtime
 FROM scratch
