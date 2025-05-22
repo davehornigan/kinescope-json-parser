@@ -38,7 +38,7 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 		<head>
 			<meta charset="UTF-8">
 			<title>JSON Multi-Upload</title>
-			<link rel="icon" type="image/png" href="/favicon.png">
+			<link rel="icon" type="image/png" href="/static/favicon.png">
 		</head>
 		<body>
 			<h1>Upload multiple JSON files</h1>
