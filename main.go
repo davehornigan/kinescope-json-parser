@@ -50,6 +50,10 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 					<input type="checkbox" name="use_filename" value="1">
 					Use filename instead title
 				</label><br><br>
+				<label>
+					<input type="checkbox" name="use_linux_binary" value="1">
+					Use linux binary
+				</label><br><br>
 				<input type="submit" value="Upload">
 			</form>
 		</body>
@@ -73,6 +77,7 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 
 	path := strings.TrimSpace(r.FormValue("path"))
 	useFilename := r.FormValue("use_filename") == "1"
+	useLinuxBinary := r.FormValue("use_linux_binary") == "1"
 
 	var commands []string
 	for _, fileHeader := range files {
@@ -110,6 +115,9 @@ func uploadHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		line := "kinescope-dl.exe"
+		if useLinuxBinary {
+			line = "kinescope-dl"
+		}
 		if strings.TrimSpace(input.Referrer) != "" {
 			line += " -r " + escapeArg(input.Referrer)
 		}
